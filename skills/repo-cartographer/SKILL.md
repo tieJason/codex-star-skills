@@ -1,77 +1,77 @@
 ---
 name: repo-cartographer
-description: Map unfamiliar codebases quickly before changing them. Use when Codex needs to orient in a new repository, explain architecture, identify entry points, trace a feature across files, produce an onboarding brief, or choose a low-risk implementation path before editing.
+description: 快速梳理陌生代码库后再动手改代码。用于 Codex 需要理解新仓库、解释架构、找到入口、追踪某个功能跨文件的数据流、生成上手说明，或在编辑前选择低风险实现路径的场景。
 ---
 
-# Repo Cartographer
+# 仓库地图师
 
-Turn an unknown repository into a small, useful map before touching code. Optimize for facts grounded in files, command output, and existing conventions.
+把陌生仓库整理成一张小而有用的地图，再开始改代码。所有判断都要落在真实文件、命令输出和现有约定上。
 
-## Workflow
+## 工作流程
 
-1. Start with repository signals:
-   - Run `rg --files` or the fastest local file lister.
-   - Inspect root manifests, lockfiles, config files, package scripts, CI files, Docker files, and docs.
-   - Run `git status -sb` to notice user work before edits.
-2. Identify the system shape:
-   - Runtime, framework, package manager, test runner, build tool, deployment surface.
-   - Main entry points, route definitions, CLI commands, workers, migrations, and shared libraries.
-   - Ownership boundaries such as apps, packages, modules, services, or layers.
-3. Trace the requested area:
-   - Search for user-facing words, route names, config keys, error messages, API paths, or domain objects.
-   - Follow imports and callers until the data flow is clear enough to make a change.
-   - Prefer call chains and contracts over broad summaries.
-4. Produce a concise map:
-   - What runs where.
-   - Which files matter for the request.
-   - Existing patterns to copy.
-   - Likely tests and verification commands.
-   - Risks, unknowns, and the recommended first change.
+1. 先看仓库信号：
+   - 用 `rg --files` 或本地最快的文件列表工具。
+   - 检查根目录 manifest、lockfile、配置、包脚本、CI、Docker 文件和文档。
+   - 执行 `git status -sb`，先识别用户已有改动。
+2. 识别系统形状：
+   - 运行时、框架、包管理器、测试框架、构建工具、部署方式。
+   - 主入口、路由定义、CLI 命令、worker、迁移、共享库。
+   - 应用、包、模块、服务或层级边界。
+3. 追踪用户关心的区域：
+   - 搜索用户给出的文案、路由名、配置键、错误信息、API 路径或领域对象。
+   - 沿 import、调用者和测试追到数据流足够清楚为止。
+   - 优先理解调用链和契约，不做空泛总结。
+4. 给出简洁地图：
+   - 哪些东西在哪里运行。
+   - 这次任务相关文件。
+   - 应该复用的现有模式。
+   - 可能的测试和验证命令。
+   - 风险、未知项和推荐第一步。
 
-## Output Shape
+## 输出结构
 
-For orientation-only requests, answer in this order:
+如果用户只要上手说明，按这个顺序回答：
 
 ```markdown
-**Repo Map**
-- Stack:
-- Entry points:
-- Important directories:
-- Data flow:
-- Test/build commands:
+**仓库地图**
+- 技术栈：
+- 入口：
+- 重要目录：
+- 数据流：
+- 测试/构建命令：
 
-**For This Task**
-- Files to inspect/change:
-- Pattern to follow:
-- Risks:
-- First move:
+**针对当前任务**
+- 需要查看/修改的文件：
+- 应复用的模式：
+- 风险：
+- 第一步：
 ```
 
-For implementation requests, use the map internally, then implement once the path is clear. Mention only the parts of the map that explain the change.
+如果用户要实现功能，先在心里完成地图，再动手实现。最终只提和改动有关的地图信息。
 
-## Search Heuristics
+## 搜索技巧
 
-- Start narrow with exact strings from the user request.
-- Search filenames before file contents when looking for likely modules.
-- Search tests for behavior names; tests often reveal the intended contract faster than implementation.
-- Inspect package scripts before inventing commands.
-- Treat generated folders, vendored code, lockfiles, build outputs, and minified assets as background unless the task specifically targets them.
+- 从用户请求里的精确字符串开始。
+- 找模块时先搜文件名，再搜文件内容。
+- 先看测试，测试通常比实现更快暴露预期契约。
+- 先查 package scripts，再决定运行什么命令。
+- 默认跳过 generated、vendor、lockfile、构建产物和压缩资源，除非任务明确指向它们。
 
-## Decision Rules
+## 判断规则
 
-- If a repo has multiple apps, identify the app that owns the requested behavior before editing shared code.
-- If two patterns exist, prefer the one closest to the touched module or newest comparable code.
-- If the task affects a public API, persistence model, auth, billing, or data migration, broaden the map to include callers, tests, and rollout risk.
-- If local docs contradict code, trust code and note the doc drift.
-- If the worktree is dirty, distinguish user changes from your planned changes before editing.
+- 多应用仓库中，先找出拥有该行为的应用，再改共享代码。
+- 有两个相似模式时，优先复用离目标模块最近、最新的可比代码。
+- 涉及公开 API、持久化、鉴权、计费或数据迁移时，扩大地图范围到调用者、测试和发布风险。
+- 文档与代码冲突时，以代码为准，并指出文档漂移。
+- 工作区有未提交改动时，先区分用户改动和你计划做的改动。
 
-## Verification
+## 验证
 
-Choose the narrowest useful checks:
+选择最小但有用的检查：
 
-- Typecheck or lint for touched language/framework.
-- Unit tests for the traced module.
-- Integration/e2e tests when behavior crosses boundaries.
-- Manual run or screenshot when the task is UI-facing.
+- 被修改语言/框架的 typecheck 或 lint。
+- 被追踪模块的单元测试。
+- 行为跨边界时跑集成或端到端测试。
+- UI 相关任务做手动运行或截图检查。
 
-If commands cannot run, report why and give the exact command that would verify the path.
+如果命令不能运行，说明原因，并给出本应用来验证的准确命令。

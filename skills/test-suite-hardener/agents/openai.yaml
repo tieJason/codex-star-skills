@@ -1,4 +1,4 @@
 interface:
-  display_name: "Test Suite Hardener"
-  short_description: "Fix flaky and low-signal tests"
-  default_prompt: "Use $test-suite-hardener to strengthen the tests around this change."
+  display_name: "测试套件加固器"
+  short_description: "提升测试覆盖、失败诊断质量，并减少 flaky 测试和无效断言"
+  default_prompt: "使用 $test-suite-hardener 强化这次改动周围的测试。"

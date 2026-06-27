@@ -1,4 +1,4 @@
 interface:
-  display_name: "Frontend Polish Pass"
-  short_description: "Polish UI with responsive visual QA"
-  default_prompt: "Use $frontend-polish-pass to improve this interface and verify it across viewports."
+  display_name: "前端打磨 Pass"
+  short_description: "打磨前端界面并验证响应式布局、状态、可访问性和视觉质量"
+  default_prompt: "使用 $frontend-polish-pass 打磨这个界面，并检查桌面和移动端布局。"

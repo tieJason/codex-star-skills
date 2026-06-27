@@ -1,4 +1,4 @@
 interface:
-  display_name: "Security Light Review"
-  short_description: "Find practical security risks quickly"
-  default_prompt: "Use $security-light-review to inspect this change for high-impact security issues."
+  display_name: "安全轻审"
+  short_description: "快速检查代码改动中的鉴权、注入、secret 和隐私暴露风险"
+  default_prompt: "使用 $security-light-review 检查这次改动中的鉴权、注入和敏感数据风险。"

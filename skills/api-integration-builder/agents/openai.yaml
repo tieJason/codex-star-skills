@@ -1,4 +1,4 @@
 interface:
-  display_name: "API Integration Builder"
-  short_description: "Build robust third-party API clients"
-  default_prompt: "Use $api-integration-builder to integrate this external API with typed errors and tests."
+  display_name: "API 集成构建器"
+  short_description: "构建稳健 API 客户端、webhook、重试和类型化错误"
+  default_prompt: "使用 $api-integration-builder 为这个外部 API 集成补上类型化错误、重试和测试。"

@@ -1,4 +1,4 @@
 interface:
-  display_name: "PR Review Sherpa"
-  short_description: "Review diffs like a senior engineer"
-  default_prompt: "Use $pr-review-sherpa to review this pull request for regressions and missing tests."
+  display_name: "PR 审查向导"
+  short_description: "像资深工程师一样审查 PR diff、回归风险和缺失测试"
+  default_prompt: "使用 $pr-review-sherpa 审查这个 PR，找出回归风险和缺失测试。"

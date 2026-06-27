@@ -1,82 +1,82 @@
 ---
 name: docs-from-code
-description: Generate or update accurate documentation from the current codebase. Use when Codex needs to write README sections, API docs, runbooks, architecture notes, migration guides, troubleshooting docs, or onboarding material grounded in actual source code and verified commands.
+description: 根据当前代码库生成或更新准确文档。用于 Codex 需要写 README、API 文档、runbook、架构说明、迁移指南、故障排查文档或基于真实源码和验证命令的上手材料时。
 ---
 
-# Docs From Code
+# 从代码生成文档
 
-Write docs that match the repository, not docs that sound plausible. Treat code, tests, configs, and command output as primary sources.
+写和仓库一致的文档，而不是听起来合理的文档。把代码、测试、配置和命令输出当作一手资料。
 
-## Workflow
+## 工作流程
 
-1. Identify the doc target:
-   - README, API reference, runbook, architecture note, tutorial, migration guide, changelog entry, or troubleshooting section.
-   - Intended reader: new contributor, operator, app developer, end user, maintainer, or reviewer.
-2. Gather facts from the repo:
-   - Manifests and scripts.
-   - Config and environment examples.
-   - Entry points, routes, CLIs, public exports, tests, and examples.
-   - Existing docs for tone and structure.
-3. Verify commands when reasonable:
-   - Help commands, test commands, build commands, CLI examples, or generated docs.
-   - If a command cannot be run, mark it as unverified.
-4. Write only supported claims:
-   - Prefer concrete file paths, command names, option names, and behavior.
-   - Avoid generic marketing language.
-   - Keep setup steps copy-pasteable.
-5. Cross-check:
-   - Ensure names, paths, flags, env vars, defaults, and examples match code.
-   - Search for stale duplicated docs if updating behavior.
+1. 明确文档目标：
+   - README、API reference、runbook、架构说明、教程、迁移指南、changelog 条目或故障排查章节。
+   - 目标读者：新贡献者、运维、应用开发者、最终用户、维护者或 reviewer。
+2. 从仓库收集事实：
+   - manifest 和 scripts。
+   - 配置和环境变量示例。
+   - 入口、routes、CLI、public exports、tests 和 examples。
+   - 现有文档的语气和结构。
+3. 合理时验证命令：
+   - help 命令、test/build 命令、CLI 示例或生成文档。
+   - 如果命令不能运行，标记为未验证。
+4. 只写有依据的结论：
+   - 优先使用具体文件路径、命令名、选项名和行为。
+   - 避免泛泛的营销语言。
+   - 让 setup 步骤可直接复制执行。
+5. 交叉检查：
+   - 确保名称、路径、flag、env var、默认值和示例与代码一致。
+   - 更新行为时，搜索是否有重复过时文档。
 
-## Documentation Types
+## 文档类型
 
 ### README
 
-Include only the parts the project needs:
+只包含项目需要的部分：
 
-- What it is.
-- Quick start.
-- Install/setup.
-- Common commands.
-- Configuration.
-- Usage examples.
-- Testing/development.
-- Deployment or operations when relevant.
+- 它是什么。
+- 快速开始。
+- 安装/setup。
+- 常用命令。
+- 配置。
+- 使用示例。
+- 测试/开发。
+- 相关时加入部署或运维。
 
-### API Docs
+### API 文档
 
-- Document request/response shapes from schemas, handlers, tests, or OpenAPI.
-- Include auth, pagination, errors, rate limits, and examples.
-- Mention versioning and compatibility if visible in code.
+- 从 schema、handler、测试或 OpenAPI 记录 request/response 形状。
+- 包含 auth、pagination、errors、rate limits 和示例。
+- 代码里可见时说明版本和兼容性。
 
-### Runbooks
+### Runbook
 
-- Start with symptoms and impact.
-- Provide diagnosis commands.
-- Explain safe remediation steps.
-- Include rollback and escalation criteria.
-- Avoid requiring tribal knowledge.
+- 先写症状和影响。
+- 给出诊断命令。
+- 说明安全修复步骤。
+- 包含回滚和升级处理标准。
+- 避免依赖口口相传的知识。
 
-### Architecture Notes
+### 架构说明
 
-- Show components and data flow.
-- Explain why boundaries exist when code reveals intent.
-- Link to files that anchor the explanation.
-- Call out known constraints and extension points.
+- 展示组件和数据流。
+- 代码能看出意图时，解释边界为什么存在。
+- 链接到支撑解释的文件。
+- 标明已知约束和扩展点。
 
-## Style Rules
+## 风格规则
 
-- Be concise and operational.
-- Put the fastest successful path first.
-- Use headings that match user tasks.
-- Prefer commands in fenced code blocks.
-- Avoid documenting internal implementation details unless maintainers need them.
-- Mark assumptions and unverified steps clearly.
+- 简洁、可操作。
+- 把最快成功路径放在最前面。
+- 使用匹配用户任务的标题。
+- 命令放进 fenced code block。
+- 除非维护者需要，不写内部实现细节。
+- 清楚标注假设和未验证步骤。
 
-## Guardrails
+## 约束
 
-- Do not invent install commands, env vars, endpoints, or flags.
-- Do not overwrite existing docs tone with a completely different style unless asked.
-- Do not include secrets from local files or logs.
-- Do not cite generated files as the only source if source files are available.
-- If docs and code disagree, update docs to match code and mention the drift in the final response.
+- 不要编造安装命令、env var、endpoint 或 flag。
+- 除非用户要求，不要把现有文档语气改成完全不同的风格。
+- 不要包含本地文件或日志中的 secrets。
+- 源文件可用时，不要只引用生成文件作为依据。
+- 文档和代码冲突时，更新文档匹配代码，并在最终回复说明漂移。

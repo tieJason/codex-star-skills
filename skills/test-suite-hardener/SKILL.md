@@ -1,81 +1,81 @@
 ---
 name: test-suite-hardener
-description: Improve test suites by adding meaningful coverage, reducing flakiness, and making failures easier to diagnose. Use when Codex needs to add regression tests, stabilize flaky tests, improve fixtures, choose test levels, or increase confidence around risky code changes.
+description: 通过有意义的覆盖、减少 flaky、提升失败诊断质量来强化测试套件。用于 Codex 需要添加回归测试、稳定不可靠测试、改进 fixture、选择测试层级，或围绕高风险改动提升信心的时候。
 ---
 
-# Test Suite Hardener
+# 测试套件加固器
 
-Make tests more trustworthy, not merely more numerous. Favor tests that catch real regressions and fail with useful signals.
+让测试更可信，而不是单纯更多。优先写能抓住真实回归、失败信号清楚的测试。
 
-## Workflow
+## 工作流程
 
-1. Identify the risk:
-   - What behavior changed?
-   - Who consumes it?
-   - What edge cases would be expensive if missed?
-   - Which test level catches the behavior with the least setup?
-2. Read local patterns:
-   - Existing test framework, fixture style, factories, mocks, naming, and assertions.
-   - Project commands from manifests and CI config.
-   - Nearby tests before creating new structures.
-3. Add or improve tests:
-   - Put tests beside comparable coverage.
-   - Use deterministic data and stable clocks.
-   - Assert behavior through public contracts.
-   - Keep one test focused on one reason to fail.
-4. Run narrowly first:
-   - Run the specific test file or test name.
-   - Then run adjacent suite or typecheck when shared code changed.
-5. Tighten diagnostics:
-   - Prefer explicit assertions over giant snapshots.
-   - Give fixtures names that explain the scenario.
-   - Add failure messages only when they clarify non-obvious intent.
+1. 识别风险：
+   - 哪个行为变了？
+   - 谁消费它？
+   - 漏掉哪些边界会代价很高？
+   - 哪个测试层级能用最少 setup 抓住行为？
+2. 阅读本地模式：
+   - 现有测试框架、fixture、factory、mock、命名和断言方式。
+   - manifest 和 CI 里的项目命令。
+   - 新建结构前先看附近测试。
+3. 添加或改进测试：
+   - 放在可比覆盖旁边。
+   - 使用确定性数据和稳定时钟。
+   - 通过公开契约断言行为。
+   - 让一个测试只因一个原因失败。
+4. 先跑窄范围：
+   - 跑具体测试文件或测试名。
+   - 共享代码变化时，再跑相邻套件或 typecheck。
+5. 强化诊断：
+   - 优先明确断言，少用巨大 snapshot。
+   - 用 fixture 名称解释场景。
+   - 只有在能澄清非显然意图时才加失败信息。
 
-## Choosing Test Level
+## 选择测试层级
 
-- Pure transformation or validation: unit test.
-- Module behavior with storage, cache, or framework glue: integration test.
-- User flow across pages/services: e2e or feature test.
-- Bug reproduction: start at the narrowest level that fails for the reported reason.
-- Accessibility, responsive UI, or visual layout: browser test plus screenshot/manual verification when available.
+- 纯转换或校验：单元测试。
+- 带存储、缓存或框架胶水的模块行为：集成测试。
+- 跨页面/服务的用户流程：e2e 或 feature test。
+- bug 复现：从能因报告原因失败的最窄层级开始。
+- 可访问性、响应式 UI 或视觉布局：有条件时加浏览器测试和截图/人工验证。
 
-## Flake Reduction
+## 减少 Flaky
 
-Look for:
+重点查：
 
-- Wall-clock dependence.
-- Random data without a seed.
-- Sleep-based waiting.
-- Shared mutable state across tests.
-- Network calls and third-party services.
-- Order dependence.
-- Assertions before async work settles.
+- 依赖墙上时间。
+- 随机数据没有 seed。
+- 用 sleep 等待。
+- 测试间共享可变状态。
+- 真实网络和第三方服务。
+- 执行顺序依赖。
+- 异步工作完成前就断言。
 
-Prefer:
+优先用：
 
-- Fake timers or injected clocks.
-- Deterministic factories.
-- Event-driven waits.
-- Isolated temp dirs/databases.
-- Boundary mocks at external services only.
-- Test cleanup through existing framework hooks.
+- fake timer 或注入 clock。
+- 确定性 factory。
+- 事件驱动等待。
+- 隔离的临时目录/数据库。
+- 只在外部服务边界 mock。
+- 项目已有的 cleanup hook。
 
-## Coverage That Matters
+## 有价值的覆盖
 
-Add tests around:
+优先覆盖：
 
-- Permission boundaries and tenant scoping.
-- Empty, missing, malformed, and maximum inputs.
-- Error handling and partial failure.
-- Serialization/deserialization changes.
-- Migration compatibility.
-- Public API responses and schema changes.
-- UI loading, error, empty, disabled, and success states.
+- 权限边界和租户隔离。
+- 空、缺失、畸形和最大输入。
+- 错误处理和部分失败。
+- 序列化/反序列化变化。
+- 迁移兼容。
+- 公开 API 响应和 schema 变化。
+- UI 的 loading、error、empty、disabled、success 状态。
 
-## Guardrails
+## 约束
 
-- Do not chase arbitrary coverage percentages at the expense of clarity.
-- Do not update snapshots without inspecting the semantic change.
-- Do not mock the function under test.
-- Do not remove assertions to make a test pass unless the product contract changed and the new contract is documented.
-- If a broad suite fails unrelatedly, report the failure and keep the task focused.
+- 不要为覆盖率数字牺牲清晰度。
+- 不要不看语义变化就更新 snapshot。
+- 不要 mock 被测函数本身。
+- 除非产品契约变化且有记录，不要删断言来让测试通过。
+- 如果大套件因无关原因失败，报告失败并保持任务聚焦。

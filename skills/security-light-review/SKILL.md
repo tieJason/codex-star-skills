@@ -1,66 +1,66 @@
 ---
 name: security-light-review
-description: Perform a practical lightweight security review of code changes or features. Use when Codex needs to inspect auth, authorization, secrets, injection, unsafe file handling, SSRF, XSS, CSRF, webhooks, dependency risk, privacy exposure, or other high-impact security issues without a full formal audit.
+description: 对代码改动或功能做实用的轻量安全审查。用于 Codex 需要检查 auth、authorization、secret、injection、unsafe file handling、SSRF、XSS、CSRF、webhook、依赖风险、隐私暴露或其他高影响安全问题，但不需要完整正式审计的场景。
 ---
 
-# Security Light Review
+# 安全轻审
 
-Find likely, high-impact security problems quickly. This is not a formal audit; it is a focused engineering review that should produce concrete fixes or risk notes.
+快速找出可能真实发生、影响较高的安全问题。这不是正式审计，而是聚焦的工程审查，应产出具体修复或风险说明。
 
-## Workflow
+## 工作流程
 
-1. Define the boundary:
-   - What changed?
-   - What inputs cross trust boundaries?
-   - Which users, tenants, roles, or services can reach it?
-   - What sensitive data, credentials, files, or money movement is involved?
-2. Trace the dangerous paths:
-   - Request parsing, authn/authz, validation, storage, outbound requests, rendering, logging, and background jobs.
-   - Search for similar patterns in the repo to match established defenses.
-3. Check the risk list below.
-4. Report findings by exploitability and impact.
-5. Implement fixes only when the user asks for implementation or the original request includes fixing.
+1. 定义边界：
+   - 改了什么？
+   - 哪些输入跨越信任边界？
+   - 哪些用户、租户、角色或服务能访问？
+   - 涉及哪些敏感数据、凭据、文件或资金流？
+2. 追踪危险路径：
+   - request parsing、authn/authz、validation、storage、outbound request、rendering、logging 和 background job。
+   - 搜索仓库相似模式，复用已有防护。
+3. 检查下面的风险清单。
+4. 按可利用性和影响报告问题。
+5. 只有用户要求实现，或原任务包含修复时，才动手修。
 
-## Risk Checklist
+## 风险清单
 
-- Auth bypass: missing session checks, trusting client-supplied user ids, weak token validation.
-- Authorization: tenant breakout, role confusion, object-level access control gaps.
-- Injection: SQL/NoSQL/LDAP/command/template injection through string concatenation.
-- XSS: unescaped HTML, unsafe markdown, user-controlled URLs, dangerous DOM sinks.
-- CSRF/CORS: unsafe state-changing endpoints exposed to browsers.
-- SSRF: user-controlled URLs reaching internal networks or metadata services.
-- File handling: path traversal, unsafe archive extraction, unrestricted uploads, executable content.
-- Secrets: committed keys, logs with tokens, secrets in URLs, overly broad env exposure.
-- Webhooks: missing signature verification, no replay protection, duplicate processing.
-- Crypto: custom crypto, weak randomness, hard-coded keys, insecure password storage.
-- Dependencies: new package with risky install scripts, abandoned package, broad transitive impact.
-- Privacy: excessive PII collection, leaks in analytics/logs/errors, missing deletion path.
+- Auth bypass：缺 session 检查、信任客户端 user id、token 校验薄弱。
+- Authorization：租户越界、角色混淆、对象级访问控制缺口。
+- Injection：SQL/NoSQL/LDAP/command/template 拼接注入。
+- XSS：未转义 HTML、不安全 markdown、用户可控 URL、危险 DOM sink。
+- CSRF/CORS：浏览器可触达的危险状态变更接口。
+- SSRF：用户可控 URL 访问内网或 metadata service。
+- 文件处理：路径穿越、不安全解压、无限制上传、可执行内容。
+- Secrets：提交密钥、日志含 token、URL 含 secret、env 暴露过宽。
+- Webhooks：缺签名验证、无 replay 防护、重复处理。
+- Crypto：自定义加密、弱随机数、硬编码 key、不安全密码存储。
+- 依赖：新增包有高风险 install script、无人维护、传递影响过大。
+- 隐私：过度收集 PII、analytics/log/error 泄露、缺删除路径。
 
-## Finding Format
+## 问题格式
 
 ```markdown
-**Findings**
-- `[High] Title` - `path/to/file.ext:123`
-  Attack path, impact, affected users/data, and concrete fix direction.
+**问题**
+- `[High] 标题` - `path/to/file.ext:123`
+  攻击路径、影响、受影响用户/数据、具体修复方向。
 
-**Residual Risk**
-- What was not covered or needs deeper audit.
+**剩余风险**
+- 未覆盖内容或需要更深审计的地方。
 
-**Checks**
-- Commands or manual inspection performed.
+**检查**
+- 已运行命令或人工检查。
 ```
 
-Severity:
+严重级别：
 
-- `Critical`: likely compromise, data loss, auth bypass, remote code execution.
-- `High`: realistic exploit with significant data or privilege impact.
-- `Medium`: constrained exploit, defense gap, or important hardening.
-- `Low`: low-likelihood issue or hygiene improvement.
+- `Critical`：可能导致系统被控、数据丢失、auth bypass 或 RCE。
+- `High`：现实可利用且数据/权限影响显著。
+- `Medium`：受限利用、防护缺口或重要加固项。
+- `Low`：低概率问题或卫生改进。
 
-## Guardrails
+## 约束
 
-- Do not provide exploit payloads against real third-party targets.
-- Do not claim a formal audit was completed.
-- Do not flag theoretical issues without a plausible path in this codebase.
-- Do not move secrets into code to simplify configuration.
-- If security advice depends on current framework behavior, verify against official docs.
+- 不要提供针对真实第三方目标的利用 payload。
+- 不要声称完成了正式审计。
+- 没有本代码库中可信路径的问题，不要报告成理论漏洞。
+- 不要为了简化配置把 secrets 移进代码。
+- 如果安全建议依赖当前框架行为，查官方文档确认。

@@ -1,77 +1,77 @@
 ---
 name: bug-reproducer
-description: Turn vague bug reports into concrete reproductions and regression tests. Use when Codex needs to investigate failing behavior, reproduce an issue locally, minimize a failing case, add a failing test before a fix, or verify that a bug fix truly closes the reported scenario.
+description: 把模糊 bug 报告转成可复现步骤和回归测试。用于 Codex 需要调查异常行为、本地复现问题、最小化失败场景、先写失败测试再修复，或验证修复是否真正覆盖报告场景的时候。
 ---
 
-# Bug Reproducer
+# Bug 复现器
 
-Convert "it broke" into a named, repeatable failure. Prefer a small failing test or script over a long explanation.
+把“它坏了”变成一个有名字、可重复的失败。优先产出小型失败测试或脚本，而不是长篇解释。
 
-## Workflow
+## 工作流程
 
-1. Capture the claim:
-   - Expected behavior.
-   - Actual behavior.
-   - Triggering inputs, environment, account state, flags, browser, locale, timezone, or data shape.
-   - Error text, logs, screenshots, or stack traces.
-2. Locate the likely path:
-   - Search exact error messages, UI labels, endpoint paths, config keys, and domain nouns.
-   - Inspect nearby tests before reading broad implementation.
-   - Identify the smallest layer that can reproduce the failure without excessive setup.
-3. Build the reproduction:
-   - Prefer an existing test file and local test helper.
-   - Use fixtures that describe the bug directly.
-   - Keep the assertion on user-visible or contract-level behavior.
-   - If a test is too expensive, create a tiny script or command sequence and document it.
-4. Confirm the failure:
-   - Run the narrow test or reproduction command.
-   - Ensure it fails for the reported reason, not unrelated setup.
-   - Preserve the failing signal in notes before implementing the fix.
-5. Fix and re-run:
-   - Apply the smallest behavioral fix.
-   - Re-run the reproduction.
-   - Run adjacent tests when the fix touches shared logic.
+1. 捕获问题主张：
+   - 期望行为。
+   - 实际行为。
+   - 触发输入、环境、账号状态、feature flag、浏览器、locale、timezone 或数据形状。
+   - 错误文本、日志、截图或 stack trace。
+2. 定位可能路径：
+   - 搜索错误信息、UI 文案、endpoint、配置键和领域名词。
+   - 先看附近测试，再广泛阅读实现。
+   - 找到能用最少环境复现失败的层级。
+3. 构造复现：
+   - 优先放进现有测试文件和本地测试 helper。
+   - 用 fixture 直接表达 bug 场景。
+   - 断言用户可见行为或契约层行为。
+   - 如果测试成本太高，写一个小脚本或命令序列并记录下来。
+4. 确认失败：
+   - 运行最窄测试或复现命令。
+   - 确保失败原因就是报告的问题，而不是环境配置。
+   - 修复前先保存失败信号。
+5. 修复并重跑：
+   - 做最小行为修复。
+   - 重跑复现。
+   - 如果改动触及共享逻辑，跑相邻测试。
 
-## Good Regression Tests
+## 好的回归测试
 
-- Name the scenario in business or user terms.
-- Assert the external contract, not incidental internals.
-- Include the minimum setup needed to express the bug.
-- Avoid sleeps, network calls, wall-clock dependence, and broad snapshots unless the project already uses them deliberately.
-- Cover the edge value that failed and, when cheap, one normal value that should still work.
+- 用业务或用户语言命名场景。
+- 断言外部契约，而不是偶然的内部实现。
+- 只保留表达 bug 必需的 setup。
+- 避免 sleep、真实网络、依赖墙上时间和大范围 snapshot，除非项目已有明确模式。
+- 覆盖失败边界值；成本低时再加一个正常值。
 
-## When a Local Repro Is Hard
+## 本地难以复现时
 
-If the bug depends on production data, third-party services, or a rare race:
+如果 bug 依赖生产数据、第三方服务或罕见竞态：
 
-- Extract the relevant data shape into a fixture.
-- Mock only the boundary that makes local execution impossible.
-- Add logging or assertions that would catch the suspected state next time.
-- State the missing condition plainly and ask for one concrete artifact: payload, log line, account id, screenshot, or exact command.
+- 把关键数据形状提取成 fixture。
+- 只 mock 让本地执行不可能的边界。
+- 加日志或断言，让下次出现同类状态时能被捕捉。
+- 明确说明缺失条件，并只索要一个具体材料：payload、日志行、账号 id、截图或准确命令。
 
-## Investigation Notes
+## 调查记录
 
-Keep notes short and actionable:
+保持简短、可执行：
 
 ```markdown
-**Repro**
-- Command:
-- Failing assertion/error:
-- Minimal scenario:
+**复现**
+- 命令：
+- 失败断言/错误：
+- 最小场景：
 
-**Cause**
-- File/function:
-- Why it fails:
+**原因**
+- 文件/函数：
+- 为什么失败：
 
-**Fix Verification**
-- Before:
-- After:
-- Extra checks:
+**修复验证**
+- 修复前：
+- 修复后：
+- 额外检查：
 ```
 
-## Guardrails
+## 约束
 
-- Do not "fix" a bug before proving what behavior is broken when a reasonable reproduction path exists.
-- Do not broaden the test suite blindly to chase unrelated failures.
-- Do not hide flaky behavior by loosening assertions unless the product contract itself changed.
-- If the report is ambiguous, make the most likely assumption explicit and keep the reproduction easy to adjust.
+- 有合理复现路径时，不要先修再证明。
+- 不要为了追无关失败盲目扩大测试范围。
+- 不要通过放松断言掩盖 flaky 行为，除非产品契约本身变了。
+- 报告不清楚时，明确最可能的假设，并让复现容易调整。

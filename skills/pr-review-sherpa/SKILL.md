@@ -1,81 +1,81 @@
 ---
 name: pr-review-sherpa
-description: Review pull requests and local diffs like a senior engineer. Use when Codex is asked to review code, inspect a PR, assess a diff before merge, find regressions, evaluate test coverage, or provide actionable file/line findings without implementing changes.
+description: 像资深工程师一样审查 Pull Request 和本地 diff。用于 Codex 被要求 review 代码、检查 PR、合并前评估 diff、寻找回归、评估测试覆盖，或给出不改代码的可执行文件/行级问题。
 ---
 
-# PR Review Sherpa
+# PR 审查向导
 
-Prioritize real defects over style commentary. A good review helps the author merge safer code with the fewest useful comments.
+优先找真实缺陷，而不是风格评论。好的 review 用最少但有用的评论帮助作者更安全地合并。
 
-## Review Stance
+## Review 姿态
 
-Lead with findings. Focus on:
+先给发现的问题。重点关注：
 
-- Incorrect behavior or broken contracts.
-- Regressions from changed control flow, data shape, auth, caching, concurrency, or persistence.
-- Missing tests for risky behavior.
-- Migration, rollout, compatibility, or operational risks.
-- Security and privacy issues introduced by the diff.
+- 行为错误或契约破坏。
+- 控制流、数据形状、鉴权、缓存、并发或持久化引入的回归。
+- 高风险行为缺少测试。
+- 迁移、发布、兼容性或运维风险。
+- diff 引入的安全和隐私问题。
 
-Avoid broad rewrites, taste-only comments, and praise sections unless the user asks for them.
+除非用户要求，不做大范围重写建议、纯个人口味评论或夸奖段落。
 
-## Workflow
+## 工作流程
 
-1. Establish the diff:
-   - Inspect `git status -sb`.
-   - Use `git diff --stat` and the relevant patch.
-   - If reviewing a PR, compare against the PR base, not the working tree by accident.
-2. Read intent:
-   - Check PR title/body, issue links, commit messages, tests, and touched docs when available.
-   - Infer the contract from nearby code if no description exists.
-3. Inspect changed behavior:
-   - Follow new branches, error paths, data transformations, public interfaces, and side effects.
-   - Search for callers when signatures, schemas, routes, events, or config keys change.
-   - Check whether tests cover the changed contract and important edge cases.
-4. Validate when cheap:
-   - Run narrow tests or static checks if they materially improve confidence.
-   - Do not spend time running broad suites unless the diff is high-risk or the user asks.
-5. Report only actionable items:
-   - Each finding needs file, line, severity, impact, and a concrete correction direction.
+1. 确认 diff：
+   - 查看 `git status -sb`。
+   - 查看 `git diff --stat` 和相关 patch。
+   - 如果 review PR，要和 PR base 比较，不要误看 working tree。
+2. 理解意图：
+   - 可用时查看 PR 标题/正文、issue 链接、提交信息、测试和相关文档。
+   - 没有描述时，从附近代码推断契约。
+3. 检查行为变化：
+   - 跟踪新分支、错误路径、数据转换、公开接口和副作用。
+   - 签名、schema、route、event 或配置键变化时，搜索调用者。
+   - 检查测试是否覆盖改动契约和重要边界。
+4. 低成本验证：
+   - 如果能明显提高信心，运行窄测试或静态检查。
+   - 除非 diff 高风险或用户要求，不默认跑大套件。
+5. 只报告可执行问题：
+   - 每条发现都需要文件、行、严重级别、影响和具体修复方向。
 
-## Finding Format
+## 问题格式
 
-Use this structure:
+使用这个结构：
 
 ```markdown
-**Findings**
-- `[P1] Title` - `path/to/file.ext:123`
-  Explain the bug, the condition that triggers it, and why it matters. Point to the smallest fix direction.
+**问题**
+- `[P1] 标题` - `path/to/file.ext:123`
+  说明 bug、触发条件、影响，以及最小修复方向。
 
-**Open Questions**
-- Question only when the answer changes review outcome.
+**开放问题**
+- 只有答案会改变 review 结论时才提问。
 
-**Checks**
-- Command run or "Not run".
+**检查**
+- 已运行命令，或“未运行”。
 ```
 
-Severity:
+严重级别：
 
-- `P0`: breaks core production behavior, data loss, critical security.
-- `P1`: likely user-facing bug, failed deploy, serious regression.
-- `P2`: edge-case bug, missing important test, maintainability risk with clear cost.
-- `P3`: minor cleanup; include sparingly.
+- `P0`：破坏核心生产行为、数据丢失、关键安全问题。
+- `P1`：很可能用户可见、部署失败或严重回归。
+- `P2`：边界 bug、缺少重要测试、成本明确的可维护性风险。
+- `P3`：小清理，谨慎使用。
 
-If no issues are found, say so directly and mention residual risk or checks not run.
+如果没有发现问题，直接说明，并提到剩余风险或未运行的检查。
 
-## Review Heuristics
+## 审查启发
 
-- New optional field: check old callers, defaults, serialization, validation, and docs.
-- New cache: check invalidation, key scope, auth/user separation, stale data behavior.
-- New async path: check cancellation, retries, ordering, and partial failure.
-- New DB query: check filtering, tenant boundaries, indexes, N+1 behavior, pagination.
-- New UI state: check loading, empty, error, disabled, mobile, and accessibility states.
-- New dependency: check bundle/runtime impact, license, and error handling.
-- Deleted code: search for references and verify tests no longer depend on it.
+- 新 optional 字段：检查旧调用者、默认值、序列化、校验和文档。
+- 新缓存：检查失效、key 作用域、用户隔离和陈旧数据。
+- 新异步路径：检查取消、重试、顺序和部分失败。
+- 新 DB 查询：检查过滤、租户边界、索引、N+1、分页。
+- 新 UI 状态：检查 loading、empty、error、disabled、mobile、accessibility。
+- 新依赖：检查 bundle/runtime 影响、license 和错误处理。
+- 删除代码：搜索引用，确认测试不再依赖它。
 
-## Guardrails
+## 约束
 
-- Do not implement fixes during a review unless the user explicitly asks.
-- Do not invent line numbers; inspect the file if line references matter.
-- Do not bury the most severe finding under summary prose.
-- Do not report style nits as bugs.
+- 除非用户明确要求，review 时不实现修复。
+- 不要编造行号；需要行引用就打开文件确认。
+- 不要把最严重的问题埋在总结下面。
+- 不要把风格 nit 当 bug 报告。

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Bug Reproducer"
-  short_description: "Turn vague bugs into failing tests"
-  default_prompt: "Use $bug-reproducer to reproduce this bug and add a regression test."
+  display_name: "Bug 复现器"
+  short_description: "把模糊 bug 报告变成最小复现场景、失败测试和修复验证"
+  default_prompt: "使用 $bug-reproducer 复现这个问题，并添加一个回归测试。"

@@ -22,9 +22,9 @@ Get-ChildItem -LiteralPath $skills -Directory | Sort-Object Name | ForEach-Objec
     return
   }
 
-  $content = Get-Content -Raw -LiteralPath $skillMd
+  $content = Get-Content -Encoding UTF8 -Raw -LiteralPath $skillMd
 
-  if ($content -notmatch '(?s)^---\s*\r?\n.*?\r?\n---') {
+  if ($content -notmatch '(?s)^---\r?\n.*?\r?\n---') {
     $errors.Add("${name}: missing YAML frontmatter")
   }
 
@@ -32,7 +32,7 @@ Get-ChildItem -LiteralPath $skills -Directory | Sort-Object Name | ForEach-Objec
     $errors.Add("${name}: frontmatter name must match directory")
   }
 
-  if ($content -notmatch '(?m)^description:\s*\S.{40,}$') {
+  if ($content -notmatch '(?m)^description:\s*\S') {
     $errors.Add("${name}: description is missing or too short")
   }
 

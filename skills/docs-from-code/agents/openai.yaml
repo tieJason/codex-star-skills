@@ -1,4 +1,4 @@
 interface:
-  display_name: "Docs From Code"
-  short_description: "Generate accurate docs from real code"
-  default_prompt: "Use $docs-from-code to update the README and runbook from the current implementation."
+  display_name: "从代码生成文档"
+  short_description: "根据真实代码、测试、配置和命令输出生成准确项目文档"
+  default_prompt: "使用 $docs-from-code 根据当前实现更新 README 和 runbook。"

@@ -1,60 +1,60 @@
 ---
 name: frontend-polish-pass
-description: Improve existing frontend UI quality with implementation and visual verification. Use when Codex is asked to make an interface feel polished, responsive, accessible, less cluttered, better aligned with a design system, or to verify UI changes with screenshots and browser checks.
+description: 改进已有前端界面的实现质量并做视觉验证。用于 Codex 被要求让界面更精致、更响应式、更可访问、更少混乱、更符合设计系统，或需要通过截图和浏览器检查验证 UI 改动的场景。
 ---
 
-# Frontend Polish Pass
+# 前端打磨 Pass
 
-Treat polish as product work: layout, hierarchy, states, motion, accessibility, and responsiveness all need to serve the user's task.
+把打磨当作产品工作：布局、层级、状态、动效、可访问性和响应式都要服务于用户任务。
 
-## Workflow
+## 工作流程
 
-1. Learn the UI system:
-   - Inspect existing components, spacing, colors, typography, icons, and state patterns.
-   - Identify the app type: dashboard, editor, marketing site, game, docs, commerce, or internal tool.
-   - Use existing component libraries and icon sets.
-2. Improve the real workflow:
-   - Prioritize the screen or path the user named.
-   - Make dense tools scannable and efficient.
-   - Make landing or editorial pages visually specific to the subject.
-   - Build complete states: loading, empty, error, disabled, hover/focus, mobile.
-3. Stabilize layout:
-   - Use responsive constraints, grid/flex rules, stable aspect ratios, and min/max widths.
-   - Ensure text does not overflow buttons, cards, tabs, sidebars, or toolbars.
-   - Avoid layout shift from dynamic content.
-4. Verify visually:
-   - Run the app if needed.
-   - Use browser screenshots at desktop and mobile widths when tools are available.
-   - Check important interactions, not just first paint.
-   - Inspect console errors if available.
+1. 学习 UI 系统：
+   - 查看现有组件、间距、颜色、字体、图标和状态模式。
+   - 判断应用类型：dashboard、editor、marketing site、game、docs、commerce 或内部工具。
+   - 复用现有组件库和图标库。
+2. 改进真实流程：
+   - 优先处理用户点名的屏幕或路径。
+   - 让高密度工具可扫读、可高效操作。
+   - 让 landing 或内容页在视觉上贴合主题。
+   - 补齐 loading、empty、error、disabled、hover/focus、mobile 等状态。
+3. 稳定布局：
+   - 使用响应式约束、grid/flex、稳定 aspect-ratio、min/max width。
+   - 确保按钮、卡片、tab、sidebar、toolbar 中的文字不溢出。
+   - 避免动态内容导致 layout shift。
+4. 视觉验证：
+   - 需要时启动应用。
+   - 工具可用时，截 desktop 和 mobile 宽度的图。
+   - 检查关键交互，不只看首屏。
+   - 可用时检查 console error。
 
-## Design Heuristics
+## 设计启发
 
-- Match the domain: operational tools should be calm and dense; creative apps can be expressive.
-- Prefer familiar controls: icon buttons for common tools, tabs for views, toggles for binary settings, sliders or inputs for numbers, menus for option sets.
-- Keep cards for repeated items, modals, and framed tools; avoid nesting cards.
-- Use real or generated bitmap imagery for websites that need visual assets.
-- Keep headings proportional to their container.
-- Avoid one-note color palettes and decorative background blobs.
-- Use accessible contrast, focus states, labels, and keyboard-reachable controls.
+- 匹配场景：运营工具应冷静、密集；创作应用可以更有表现力。
+- 使用熟悉控件：常用工具用 icon button，视图用 tabs，二元设置用 toggle，数字用 slider/input，选项用 menu。
+- 卡片只用于重复项、modal 和被框定的工具；避免卡片套卡片。
+- 需要视觉资产的网站应使用真实或生成的 bitmap 图片。
+- 标题大小要匹配容器。
+- 避免单一色系和装饰性背景 blob。
+- 保证对比度、focus 状态、label 和键盘可达性。
 
-## Visual QA Checklist
+## 视觉 QA 清单
 
-- Desktop viewport works without awkward whitespace or overlap.
-- Mobile viewport works without horizontal scroll unless intentionally designed.
-- Long labels and realistic data fit.
-- Empty/error/loading states are coherent.
-- Buttons and inputs have hover, focus, disabled, and active feedback.
-- Icons align optically with text.
-- Images and canvases are nonblank and correctly framed.
-- No console errors from the changed path.
+- desktop 下没有奇怪空白或重叠。
+- mobile 下没有非预期横向滚动。
+- 长 label 和真实数据能放下。
+- empty/error/loading 状态完整。
+- 按钮和输入有 hover、focus、disabled、active 反馈。
+- 图标与文字视觉对齐。
+- 图片和 canvas 非空、构图正确。
+- 改动路径没有 console error。
 
-## Output
+## 输出
 
-When done, summarize:
+完成后总结：
 
-- What changed visually and behaviorally.
-- Which viewports or interactions were checked.
-- Any remaining design risks or assets that would improve the result.
+- 视觉和行为改了什么。
+- 检查过哪些 viewport 或交互。
+- 还剩哪些设计风险或有用资产缺口。
 
-If screenshots cannot be taken, say which manual/browser checks were unavailable and still run code-level checks where useful.
+如果不能截图，说明缺少的手动/浏览器检查，并尽量运行代码层检查。
