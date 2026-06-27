@@ -13,18 +13,3 @@
 ## Frontend
 
 - `frontend-polish-pass`: responsive UI refinement, states, visual QA, accessibility basics.
-
-## Content And Knowledge Work
-
-- `content-research-writer`: sourced writing, outlines, article drafts, voice-preserving edits.
-- `notion-research-documentation`: Notion research synthesis and report generation.
-
-## Files And Media
-
-- `officecli`: Word, Excel, and PowerPoint creation, inspection, and modification.
-- `pdf`: PDF extraction, rendering, creation, and review.
-- `transcribe`: audio/video transcription and diarization.
-
-## GitHub
-
-- `gh-address-comments`: unresolved PR review comments and actionable fix loops.

@@ -1,6 +1,6 @@
 # Codex Star Skills
 
-High-leverage Codex skills for code review, debugging, documentation, frontend polish, API work, research writing, PDFs, Office files, transcription, and GitHub workflows.
+High-leverage original Codex skills for code review, debugging, documentation, frontend polish, API work, security review, and test quality.
 
 The collection is designed like a toolbox: each skill is small enough to load quickly, specific enough to trigger at the right time, and practical enough to use on real projects without extra ceremony.
 
@@ -16,12 +16,6 @@ The collection is designed like a toolbox: each skill is small enough to load qu
 | `api-integration-builder` | Build robust API clients, webhooks, retries, and typed errors. |
 | `security-light-review` | Run practical security checks on code changes. |
 | `docs-from-code` | Generate accurate docs from code, tests, and configs. |
-| `content-research-writer` | Research, outline, draft, and cite long-form writing. |
-| `gh-address-comments` | Fetch and address actionable GitHub PR comments. |
-| `notion-research-documentation` | Research across Notion and synthesize structured docs. |
-| `officecli` | Create, inspect, and edit Word, Excel, and PowerPoint files. |
-| `pdf` | Read, create, render, inspect, and modify PDFs. |
-| `transcribe` | Transcribe audio/video with diarization support. |
 
 ## Install
 
@@ -91,4 +85,4 @@ It checks skill naming, frontmatter, required files, and common template leftove
 
 ## License
 
-MIT. Some copied upstream skills include their own `LICENSE.txt`; keep those notices with the corresponding skill.
+MIT.

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Office CLI"
-  short_description: "Create and edit Office documents with officecli"
-  default_prompt: "Use $officecli to inspect and update this Office document."
