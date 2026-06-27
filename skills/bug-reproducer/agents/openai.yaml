@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bug Reproducer"
+  short_description: "Turn vague bugs into failing tests"
+  default_prompt: "Use $bug-reproducer to reproduce this bug and add a regression test."

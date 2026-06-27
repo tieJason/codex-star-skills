@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Light Review"
+  short_description: "Find practical security risks quickly"
+  default_prompt: "Use $security-light-review to inspect this change for high-impact security issues."

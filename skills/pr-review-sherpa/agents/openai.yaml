@@ -1,0 +1,4 @@
+interface:
+  display_name: "PR Review Sherpa"
+  short_description: "Review diffs like a senior engineer"
+  default_prompt: "Use $pr-review-sherpa to review this pull request for regressions and missing tests."

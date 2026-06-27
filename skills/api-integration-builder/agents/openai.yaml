@@ -1,0 +1,4 @@
+interface:
+  display_name: "API Integration Builder"
+  short_description: "Build robust third-party API clients"
+  default_prompt: "Use $api-integration-builder to integrate this external API with typed errors and tests."

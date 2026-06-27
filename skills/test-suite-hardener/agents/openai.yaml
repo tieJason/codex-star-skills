@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Suite Hardener"
+  short_description: "Fix flaky and low-signal tests"
+  default_prompt: "Use $test-suite-hardener to strengthen the tests around this change."

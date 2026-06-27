@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Cartographer"
+  short_description: "Map unfamiliar codebases fast"
+  default_prompt: "Use $repo-cartographer to map this repository and identify the safest first change."

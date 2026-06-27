@@ -1,0 +1,4 @@
+interface:
+  display_name: "Content Research Writer"
+  short_description: "Research and draft sourced long-form content"
+  default_prompt: "Use $content-research-writer to outline, research, and draft this article in my voice."

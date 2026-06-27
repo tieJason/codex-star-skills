@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs From Code"
+  short_description: "Generate accurate docs from real code"
+  default_prompt: "Use $docs-from-code to update the README and runbook from the current implementation."
